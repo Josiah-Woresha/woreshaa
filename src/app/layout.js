@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ViewTransitions } from "next-view-transitions";
+
+import Nav from "./components/Nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,10 +21,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <ViewTransitions>
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <Nav />
         {children}
       </body>
     </html>
+    </ViewTransitions>
   );
 }
