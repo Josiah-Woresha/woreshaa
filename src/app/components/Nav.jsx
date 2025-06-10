@@ -78,7 +78,19 @@ const Nav = () => {
                         })
                     }}
                     href="/info">
-                        Info
+                        Developer
+                    </a>
+                </div>
+                <div className="link">
+                <a
+                    onClick={(e) => {
+                        e.preventDefault();
+                        router.push("/contact", {
+                            onTransitionReady: slideInOut,
+                        })
+                    }}
+                    href="/contact">
+                        Lets Talk
                     </a>
                 </div>
             </div>

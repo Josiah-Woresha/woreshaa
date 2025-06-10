@@ -1,6 +1,11 @@
+/* globals.css */
+
 :root {
   --bg: #131212;
   --copy: #fff;
+  --button-bg: #0070f3; /* Example button background color */
+  --button-text: #fff; /* Example button text color */
+  --card-bg: #1a1a1a; /* Define card background for consistency */
 }
 
 * {
@@ -10,17 +15,17 @@
 }
 
 body {
-  font-family: "Neue Haas Grotesk Display Pro";
+  font-family: "Neue Haas Grotesk Display Pro", sans-serif; /* Added sans-serif fallback */
   background-color: #000;
   color: var(--copy);
   overflow-x: hidden;
 }
 
-
+/* Changed object-fit for all images */
 img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Changed from 'cover' to 'contain' */
 }
 
 .nav {
@@ -32,6 +37,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000; /* Ensure nav is above other content */
 }
 
 .links {
@@ -43,7 +49,7 @@ a {
   text-decoration: none;
   text-transform: uppercase;
   color: var(--copy);
-  font-family: "Akkurat Mono";
+  font-family: "Akkurat Mono", monospace; /* Added monospace fallback */
   font-size: 12px;
   font-weight: 600;
   padding: 0.5em;
@@ -80,10 +86,11 @@ a {
 
 .projects {
   width: 100vw;
-  height: 100%;
+  padding: 8em 1em;
+  display: flex;
+  justify-content: center;
   min-height: 100svh;
   background-color: var(--bg);
-  padding: 20em 1em;
 }
 
 .images {
@@ -94,18 +101,134 @@ a {
   gap: 2em;
 }
 
+/* --- Project Grid Styles (Default for Larger Screens) --- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: calc(50vh - 1em);
+  gap: 2em;
+  width: 90%;
+  max-width: 1200px;
+}
 
+.project-card {
+  background-color: var(--card-bg);
+  padding: 0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: none;
+  height: calc(50vh - 1em);
+  overflow: hidden;
+  position: relative; /* Needed for absolute positioning of overlay content */
+}
+
+/* The Link around the image and overlay content */
+.project-card > a {
+  display: block; /* Make the Link behave like a block */
+  width: 100%;
+  height: 100%; /* Link fills the card */
+  position: relative; /* Needed for absolute positioning of overlay content */
+}
+
+/* Changed object-fit for project thumbnails */
+.project-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Changed from 'cover' to 'contain' */
+  border-radius: 8px;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+  z-index: 1; /* Ensures image is below the overlay content */
+}
+
+.project-card:hover .project-thumbnail {
+  filter: grayscale(0%);
+}
+
+/* New: Container for title and arrow on large screens */
+.project-overlay-content {
+  display: flex; /* Use flexbox to align title and arrow */
+  justify-content: space-between; /* Pushes title left, arrow right */
+  align-items: center; /* Vertically centers them */
+  position: absolute;
+  bottom: 1em; /* Position from bottom */
+  left: 1em; /* Position from left */
+  right: 1em; /* Position from right */
+  z-index: 2; /* Above the image */
+  color: var(--copy); /* Apply color to both title and arrow */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* For readability */
+  pointer-events: none; /* Allows clicks to pass through to the underlying Link */
+}
+
+/* Style for the project title on large screens (within the overlay) */
+.project-overlay-content .project-title-large-screen {
+  font-size: 1.8em; /* Make it prominent */
+  margin: 0; /* Remove default margins */
+  padding: 0;
+  flex-grow: 1; /* Allows title to take up available space */
+  text-align: left; /* Keep title left-aligned */
+}
+
+/* Style for the arrow icon */
+.project-overlay-content .project-arrow-icon {
+  font-size: 2.5em; /* Make the arrow large */
+  margin-left: 0.5em; /* Small space between title and arrow */
+  flex-shrink: 0; /* Prevent arrow from shrinking */
+}
+
+/* Hide the small screen title by default (on large screens) */
+.project-details .project-title-small-screen {
+  display: none;
+}
+
+.project-details {
+  display: none; /* Hidden by default on large screens */
+}
+
+.project-description {
+  color: #ccc;
+  font-size: 0.9em;
+  margin-bottom: 1.5em;
+  line-height: 1.4;
+}
+
+.view-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 0.8em 1.5em;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #0056b3;
+}
+
+/* --- Info Section (unchanged) --- */
 .info {
   width: 100vw;
   height: 100vh;
   min-height: 100svh;
-  background-color: var(--bg);
   display: flex;
-
+  background-color: var(--bg);
 }
 
 .col {
   flex: 1;
+}
+
+.col img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .col:nth-child(2) {
@@ -115,7 +238,7 @@ a {
   align-items: center;
 }
 
-.col p{
+.col p {
   font-weight: 500;
   font-size: 2rem;
   color: var(--copy);
@@ -131,28 +254,92 @@ a {
   will-change: transform;
 }
 
-/* Media Queries for Responsive Design */
+/* --- Media Queries for Responsive Design --- */
 @media (max-width: 768px) {
   .info {
-    flex-direction: column; /* Ensure columns stack vertically on smaller screens */
+    flex-direction: column;
   }
 
   .col {
-    padding: 0.5em; /* Reduce padding for smaller screens */
+    padding: 0.5em;
   }
 
   .col:nth-child(2) {
-    padding: 1em; /* Reduce padding for smaller screens */
+    padding: 1em;
   }
 
   .col p {
-    font-size: 1.25rem; /* Further reduce font size for smaller screens */
+    font-size: 1.25rem;
+  }
+
+  .col img {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .projects-grid {
+    width: 95%;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: auto;
+  }
+
+  .project-card {
+    height: auto;
+    padding: 1.5em;
+    border-radius: 8px;
+  }
+
+  .project-card > a {
+    position: relative;
+    height: 200px;
+  }
+
+  .project-thumbnail {
+    height: 100%;
+    border-radius: 4px;
+    margin-bottom: 1em;
+    filter: grayscale(0%);
+    transition: none;
+    object-fit: contain; /* Changed from 'cover' to 'contain' */
+  }
+
+  /* Hide the overlay content on small screens */
+  .project-overlay-content {
+    display: none;
+  }
+
+  /* Show project details and small screen title on small screens */
+  .project-details {
+    display: block;
+    padding: 0;
+  }
+
+  .project-details .project-title-small-screen {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 1.5em;
+    text-align: center;
+    color: var(--copy);
   }
 }
 
 @media (max-width: 480px) {
   .col p {
-    font-size: 1rem; /* Even smaller font size for very small screens */
+    font-size: 1rem;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-card {
+    padding: 1em;
+  }
+  .project-card > a {
+    height: 120px;
+  }
+  .project-thumbnail {
+    height: 100%;
   }
 }
 
@@ -180,3 +367,617 @@ a {
   z-index: 1;
   animation: none !important;
 }
+
+/* Styles for Project Detail Page */
+.project-detail-page {
+  background-color: var(--bg);
+  min-height: 100vh;
+  color: var(--copy);
+}
+
+/* Hero Section Styles */
+.project-hero {
+  width: 100%;
+  height: 80vh; /* Adjust as needed */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end; /* Align content to the bottom */
+  justify-content: flex-start; /* Align content to the left */
+  position: relative;
+  padding: 2em; /* Padding for content inside hero */
+  box-sizing: border-box; /* Include padding in height */
+}
+
+.hero-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0)
+  ); /* Gradient for readability */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2em;
+}
+
+.hero-title {
+  font-size: 4em;
+  margin-bottom: 0.2em;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  text-align: left; /* Ensure title is left-aligned */
+}
+
+.hero-meta {
+  font-size: 1.2em;
+  color: #ccc;
+  text-align: left; /* Ensure meta is left-aligned */
+  display: flex; /* Use flexbox to align meta items */
+  flex-wrap: wrap; /* Allow items to wrap */
+  align-items: center; /* Vertically align items */
+  gap: 1.5em; /* Space between meta items */
+  margin-top: 0.5em; /* Space above meta info */
+}
+
+.hero-client,
+.hero-year {
+  /* No margin-right here as gap handles it */
+}
+
+/* New: Style for Visit Website link in hero */
+.hero-website-link {
+  color: #0070f3; /* Button color */
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.hero-website-link:hover {
+  color: #0056b3;
+}
+
+/* Project Detail Content Container */
+.project-detail-content {
+  padding: 3em 1em;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left; /* Align text within content to the left */
+}
+
+.project-detail-content h2 {
+  font-size: 2.2em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  color: var(--copy);
+}
+
+.project-detail-content p {
+  font-size: 1.1em;
+  line-height: 1.7;
+  margin-bottom: 1em;
+}
+
+.project-tagline {
+  font-style: italic;
+  font-size: 1.2em;
+  margin-top: 2em; /* Add some space above tagline */
+  margin-bottom: 3em;
+  color: #ccc;
+  text-align: center; /* Center the tagline */
+}
+
+/* Problem and Solution Section Styles */
+.problem-solution-section {
+  display: flex;
+  flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+  gap: 2em; /* Space between columns */
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.problem-column,
+.solution-column {
+  flex: 1; /* Each column takes equal space */
+  min-width: 300px; /* Minimum width before wrapping */
+  background-color: var(--card-bg);
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.problem-column h2,
+.solution-column h2 {
+  font-size: 1.8em; /* Slightly smaller heading than main H2 */
+  margin-top: 0; /* Remove top margin */
+  margin-bottom: 0.8em;
+  color: var(--copy);
+}
+
+.problem-column p,
+.solution-column p {
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+
+/* Big Div Image Styles */
+.project-large-image {
+  width: 100%;
+  height: 600px; /* Large height for the big div image */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  margin: 4em auto; /* Center the image with margin */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  display: block; /* Default to block for desktop */
+}
+
+.project-large-image.mobile-image-div {
+  display: none; /* Hidden by default on desktop */
+}
+
+/* Additional Two Images Section Styles */
+.additional-images-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em; /* Space between images */
+  margin: 4em auto; /* Center the section with margin */
+  max-width: 900px; /* Match content width */
+  justify-content: center; /* Center images if they don't fill the row */
+}
+
+.additional-image-item {
+  flex: 1; /* Each image takes equal space */
+  min-width: 350px; /* Minimum width before wrapping */
+  height: 350px; /* Fixed height for consistent look */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-story-section {
+  margin-top: 3em;
+}
+
+.project-full-description {
+  margin-top: 3em; /* Ensure good spacing */
+}
+
+/* Previous/Next Project Navigation Styles */
+.project-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5em;
+  padding-top: 2em;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 1em; /* Space between buttons if they wrap */
+}
+
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--copy);
+  text-decoration: none;
+  font-size: 1.1em;
+  font-weight: 600;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding: 0.5em 0; /* Add some padding for clickable area */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.nav-button:hover {
+  color: var(--button-bg);
+  transform: translateX(5px); /* Move slightly on hover */
+}
+
+.nav-button.prev:hover {
+  transform: translateX(-5px); /* Move slightly on hover for prev */
+}
+
+.nav-button.disabled {
+  color: #555; /* Dim color for disabled buttons */
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none; /* Disable click events */
+}
+
+/* Footer Styles */
+.main-footer {
+  background-color: #0d0d0d; /* Very dark background */
+  color: #f0f0f0; /* Light text color */
+  padding: 3em 1em;
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle top border */
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+  justify-content: space-around;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2em; /* Space between columns */
+  text-align: left; /* Align text within columns */
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 250px; /* Minimum width for each column */
+  padding: 1em; /* Inner padding for columns */
+}
+
+.footer-column h3 {
+  font-size: 1.6em;
+  margin-bottom: 1em;
+  color: var(--button-bg); /* Use accent color for headings */
+}
+
+.footer-column p {
+  font-size: 0.95em;
+  line-height: 1.5;
+  margin-bottom: 0.8em;
+}
+
+.footer-email a {
+  color: #f0f0f0; /* Ensure email link is visible */
+  text-decoration: underline;
+  text-transform: none; /* Override uppercase from global 'a' */
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+.footer-email a:hover {
+  color: var(--button-bg);
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5em;
+}
+
+.footer-column ul li a {
+  color: #f0f0f0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  text-transform: none; /* Override uppercase from global 'a' */
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+.footer-column ul li a:hover {
+  color: var(--button-bg);
+}
+
+.social-links a {
+  display: inline-block;
+  color: #f0f0f0;
+  text-decoration: none;
+  margin-right: 1.5em;
+  transition: color 0.3s ease;
+  text-transform: none; /* Override uppercase from global 'a' */
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+}
+
+.social-links a:hover {
+  color: var(--button-bg);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2em;
+  padding-top: 1.5em;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.85em;
+  color: #aaa;
+}
+
+.contact-page-container {
+  background-color: var(--bg);
+  min-height: 100vh;
+  color: var(--copy);
+}
+
+.contact-hero {
+  width: 100%;
+  padding: 8em 1em 6em; /* Top padding for nav, bottom for content */
+  min-height: 70vh; /* Make it substantial */
+  display: flex;
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    rgba(19, 18, 18, 1) 0%,
+    rgba(19, 18, 18, 0.9) 70%,
+    rgba(19, 18, 18, 0.8) 100%
+  ); /* Subtle gradient for depth */
+}
+
+.contact-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-title {
+  font-size: 4em;
+  margin-bottom: 0.5em;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  color: var(--copy);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.contact-tagline {
+  font-size: 1.5em;
+  color: #ccc;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.contact-details-section {
+  padding: 4em 1em;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+  gap: 2em;
+  justify-content: center;
+}
+
+.contact-card {
+  background-color: var(--card-bg);
+  padding: 2.5em;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}
+
+.contact-card h3 {
+  font-size: 1.8em;
+  margin-bottom: 0.8em;
+  color: var(--button-bg); /* Use your accent color */
+}
+
+.contact-card p {
+  font-size: 1em;
+  line-height: 1.5;
+  color: #aaa;
+  margin-bottom: 1.5em;
+  min-height: 50px; /* Ensure consistent card height */
+}
+
+.contact-link {
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--copy);
+  text-decoration: none;
+  border-bottom: 2px solid var(--button-bg); /* Highlight link */
+  padding-bottom: 0.2em;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: var(--button-bg);
+  border-color: var(--copy);
+}
+
+.contact-cta {
+  padding: 5em 1em;
+  text-align: center;
+  max-width: 900px;
+  margin: 4em auto 0; /* Margin-bottom will be handled by footer */
+  background-color: #0d0d0d; /* Slightly darker than main bg */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.contact-cta h2 {
+  font-size: 2.8em;
+  margin-bottom: 0.8em;
+  line-height: 1.2;
+  color: var(--copy);
+}
+
+.contact-cta p {
+  font-size: 1.2em;
+  color: #ccc;
+  line-height: 1.6;
+  margin-bottom: 2.5em;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 1.2em 2.8em;
+  border-radius: 50px; /* Pill shape */
+  cursor: pointer;
+  font-size: 1.3em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  text-decoration: none; /* Ensure no underline */
+  display: inline-block; /* Allows padding and transitions */
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(0, 112, 243, 0.3); /* Shadow with accent color */
+}
+
+/* Media queries for footer responsiveness */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column; /* Stack columns vertically */
+    align-items: center; /* Center columns */
+    text-align: center; /* Center text within columns */
+  }
+
+  .footer-column {
+    min-width: auto; /* Remove min-width to allow full width stacking */
+    width: 100%;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center; /* Center social links */
+    gap: 1.5em; /* Add gap for spacing */
+    margin-top: 1em;
+  }
+
+  .social-links a {
+    margin-right: 0; /* Remove individual margins as gap handles it */
+  }
+
+  .footer-column ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .problem-solution-section {
+    flex-direction: column; /* Stack problem/solution vertically */
+  }
+  .additional-images-section {
+    flex-direction: column; /* Stack additional images vertically */
+  }
+  .additional-image-item {
+    min-width: auto; /* Allow image to take full width */
+    height: 250px; /* Reduce height for small screens */
+  }
+  .main-footer {
+    padding: 2em 0.5em;
+  }
+  .footer-column h3 {
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-hero {
+    min-height: 50vh;
+    padding: 6em 1em 4em;
+  }
+
+  .contact-title {
+    font-size: 3em;
+  }
+
+  .contact-tagline {
+    font-size: 1.2em;
+  }
+
+  .contact-details-section {
+    padding: 3em 1em;
+  }
+
+  .contact-card {
+    padding: 2em;
+  }
+
+  .contact-card h3 {
+    font-size: 1.6em;
+  }
+
+  .contact-card p {
+    min-height: auto; /* Allow height to adjust */
+  }
+
+  .contact-cta {
+    padding: 3em 1em;
+    margin-top: 3em;
+  }
+
+  .contact-cta h2 {
+    font-size: 2.2em;
+  }
+
+  .contact-cta p {
+    font-size: 1em;
+    margin-bottom: 2em;
+  }
+
+  .cta-button {
+    padding: 1em 2em;
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-hero {
+    min-height: 40vh;
+    padding: 5em 0.8em 3em;
+  }
+
+  .contact-title {
+    font-size: 2.2em;
+  }
+
+  .contact-tagline {
+    font-size: 1em;
+  }
+
+  .contact-details-grid {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+    gap: 1.5em;
+  }
+
+  .contact-card {
+    padding: 1.5em;
+  }
+
+  .contact-card h3 {
+    font-size: 1.4em;
+  }
+
+  .contact-cta h2 {
+    font-size: 1.8em;
+  }
+
+  .contact-cta p {
+    font-size: 0.9em;
+  }
+
+  .cta-button {
+    padding: 0.8em 1.5em;
+    font-size: 1em;
+  }
+}
+
+
+
+
