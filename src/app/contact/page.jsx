@@ -53,7 +53,7 @@ const ContactPage = () => {
               <h3>Follow My Updates</h3>
               <p>Catch my occasional thoughts on design, development, and industry trends. Stay updated on my latest work.</p>
               <a href="https://x.com/JosiahWoresha" target="_blank" rel="noopener noreferrer" className="contact-link" aria-label="Follow me on X">
-                Twitter @JosiahWoresha &rarr;
+                X @JosiahWoresha &rarr;
               </a>
             </div>
           </div>
