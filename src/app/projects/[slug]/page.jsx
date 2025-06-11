@@ -3,9 +3,10 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import projectsData from "../../../../lib/Projects"; // Ensure this path is correct
+import projectsData from "../../../../lib/Projects";
 import ReactLenis from "@studio-freight/react-lenis";
 import Link from "next/link"; // Import Link for navigation
+import Image from "next/image";
 
 const ProjectDetail = () => {
   const params = useParams();

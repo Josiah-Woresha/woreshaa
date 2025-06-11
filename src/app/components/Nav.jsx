@@ -90,7 +90,7 @@ const Nav = () => {
                         })
                     }}
                     href="/contact">
-                        Lets Talk
+                        Let's Talk
                     </a>
                 </div>
             </div>

@@ -591,7 +591,7 @@ a {
 
 /* Footer Styles */
 .main-footer {
-  background-color: #0d0d0d; /* Very dark background */
+  background-color: #131212; /* Very dark background */
   color: #f0f0f0; /* Light text color */
   padding: 3em 1em;
   border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle top border */
@@ -602,7 +602,7 @@ a {
   flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
   justify-content: space-around;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 20px auto;
   gap: 2em; /* Space between columns */
   text-align: left; /* Align text within columns */
 }
